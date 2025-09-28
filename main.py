@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
-from typing import Optional
 import re
+from datetime import date
+from decimal import Decimal
 
-# === Пользовательские исключения ===
 class InvalidNameError(ValueError):
     """Имя или фамилия не соответствуют формату."""
     pass
@@ -15,7 +15,6 @@ class InvalidPhoneError(ValueError):
     """Некорректный номер телефона."""
     pass
 
-# === Абстрактный класс Person ===
 class Person(ABC):
     def __init__(
         self,
@@ -71,3 +70,30 @@ class Person(ABC):
 
     def __str__(self) -> str:
         return f"{self.get_full_name()} <{self.email}>"
+class Member(Person):
+    def __init__(self, id: int, first_name: str, last_name: str, email: str, phone: str, membership_start_date: date,
+                 membership_end_date: date, is_active: bool=True):
+        super().__init__(id, first_name, last_name, email, phone)
+        self.membership_start_date = membership_start_date
+        self.membership_end_date = membership_end_date
+        self.is_active = is_active
+        def get_full_name(self) -> str:
+            return f"{self.first_name} {self.last_name}"
+        def renew_membership(self, days: int = 365) -> None:
+            from datetime import timedelta
+            self.membership_end_date = date.today() + timedelta(days=days)
+            self.is_active = True
+        def cancel_membership(self) -> None:
+            self.is_active = False
+
+class Coach(Person):
+    def __init__(self, id: int, first_name: str, last_name: str, email: str, phone: str, specialization: str, hourly_rate : Decimal):
+        super().__init__(id, first_name, last_name, email, phone)
+        self.specialization = specialization
+        self.hourly_rate = hourly_rate
+        self.is_active = True
+
+        def get_full_name(self) -> str:
+            return f"{self.first_name} {self.last_name} ({self.specialization})"
+        def set_availability(self, available: bool) -> None:
+            self.is_active = available
