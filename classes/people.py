@@ -77,13 +77,13 @@ class Member(Person):
         self.membership_start_date = membership_start_date
         self.membership_end_date = membership_end_date
         self.is_active = is_active
-        def get_full_name(self) -> str:
+    def get_full_name(self) -> str:
             return f"{self.first_name} {self.last_name}"
-        def renew_membership(self, days: int = 365) -> None:
+    def renew_membership(self, days: int = 365) -> None:
             from datetime import timedelta
             self.membership_end_date = date.today() + timedelta(days=days)
             self.is_active = True
-        def cancel_membership(self) -> None:
+    def cancel_membership(self) -> None:
             self.is_active = False
 
 class Coach(Person):
