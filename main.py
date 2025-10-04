@@ -1,29 +1,36 @@
-from datetime import date
-from classes.people import Member
-from repositories.member_repository import MemberRepository
+from datetime import datetime
+from decimal import Decimal
+from classes.people import Coach
+from classes.gym_room import GymRoom
+from classes.group_class import GroupClass
+from repositories.coach_repository import CoachRepository
+from repositories.gym_room_repository import GymRoomRepository
+from repositories.group_class_repository import GroupClassRepository
 
-def main():
-    repo = MemberRepository()
+# 1. Сохраняем тренера
+coach_repo = CoachRepository()
+coach = Coach(1, "Иван", "Сидоров", "ivan@fit.com", "79998887766", "Кардио", Decimal("2000.00"))
+coach_repo.save(coach)
 
-    # Создаём участника
-    member = Member(
-        id=1,
-        first_name="Анна",
-        last_name="Петрова",
-        email="anna@PUPUPU.max",
-        phone="79123456789",
-        membership_start_date=date(2025, 10, 2),
-        membership_end_date=date(2026, 4, 2)
-    )
+# 2. Сохраняем зал
+room_repo = GymRoomRepository()
+room = GymRoom(1, "Cardio Hall", "кардио", 15)
+room_repo.save(room)
 
-    # Сохраняем
-    repo.save(member)
-    print("Участник сохранён!")
+# 3. Сохраняем занятие
+group_repo = GroupClassRepository()
+group_class = GroupClass(1, "Утренняя кардио-зарядка", coach, room, datetime(2025, 10, 5, 9, 0), 12)
+group_repo.save(group_class)
 
-    # Загружаем всех
-    all_members = repo.get_all()
-    for m in all_members:
-        print(f"- {m.get_full_name()} | активен: {m.is_active}")
-
-if __name__ == "__main__":
-    main()
+# 4. Загружаем всё
+loaded_classes = group_repo.find_all()
+cardio_class=loaded_classes[0]
+print(f"\nДо записи: {cardio_class}")
+cardio_class.add_attendee()
+cardio_class.add_attendee()
+group_repo.save(cardio_class)
+# 6. Проверяем результат
+updated_classes = group_repo.find_all()
+print("\nПосле записи:")
+for cls in updated_classes:
+    print(cls)

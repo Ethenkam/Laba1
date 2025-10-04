@@ -11,7 +11,8 @@ class GroupClass:
         coach: Coach,
         room: GymRoom,
         schedule: datetime,
-        max_capacity: int = 10
+        max_capacity: int = 10,
+        current_attendees: int = 0
     ):
         self.class_id = self._validate_id(class_id)
         self.class_name = self._validate_name(class_name)
@@ -19,7 +20,7 @@ class GroupClass:
         self.room = room
         self.schedule = schedule
         self.max_capacity = self._validate_capacity(max_capacity)
-        self.current_attendees = 0
+        self.current_attendees = current_attendees
 
     @staticmethod
     def _validate_id(class_id: int) -> int:
@@ -54,5 +55,5 @@ class GroupClass:
             f"тренер: {self.coach.get_full_name()} | "
             f"зал: {self.room.room_name} | "
             f"{self.schedule.strftime('%d.%m.%Y %H:%M')} | "
-            f"мест: {self.current_attendees}/{self.max_capacity}"
+            f"мест: {self.max_capacity-self.current_attendees}/{self.max_capacity}"
         )
