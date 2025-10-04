@@ -1,7 +1,6 @@
 from datetime import datetime
 from classes.people import Coach
 from classes.gym_room import GymRoom
-# models/group_class.py
 
 class GroupClass:
     def __init__(
@@ -12,7 +11,8 @@ class GroupClass:
         room: GymRoom,
         schedule: datetime,
         max_capacity: int = 10,
-        current_attendees: int = 0
+        current_attendees: int = 0,
+        attendees: list = None,
     ):
         self.class_id = self._validate_id(class_id)
         self.class_name = self._validate_name(class_name)
@@ -21,6 +21,7 @@ class GroupClass:
         self.schedule = schedule
         self.max_capacity = self._validate_capacity(max_capacity)
         self.current_attendees = current_attendees
+        self.attendees = []
 
     @staticmethod
     def _validate_id(class_id: int) -> int:
@@ -40,9 +41,10 @@ class GroupClass:
             raise ValueError("Макс. вместимость должна быть ≥ 8.")
         return cap
 
-    def add_attendee(self) -> bool:
+    def add_attendee(self, member_id) -> bool:
         if self.current_attendees < self.max_capacity:
             self.current_attendees += 1
+            self.attendees.append(member_id)
             return True
         return False
 
@@ -56,4 +58,5 @@ class GroupClass:
             f"зал: {self.room.room_name} | "
             f"{self.schedule.strftime('%d.%m.%Y %H:%M')} | "
             f"мест: {self.max_capacity-self.current_attendees}/{self.max_capacity}"
+            f"участники: {self.attendees}"
         )

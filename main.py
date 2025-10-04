@@ -26,8 +26,7 @@ group_repo.save(group_class)
 loaded_classes = group_repo.find_all()
 cardio_class=loaded_classes[0]
 print(f"\nДо записи: {cardio_class}")
-cardio_class.add_attendee()
-cardio_class.add_attendee()
+cardio_class.add_attendee(1)
 group_repo.save(cardio_class)
 # 6. Проверяем результат
 updated_classes = group_repo.find_all()

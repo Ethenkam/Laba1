@@ -40,7 +40,8 @@ class GroupClassRepository:
             "room_id": cls.room.room_id,
             "schedule": cls.schedule.isoformat(),  # ISO 8601
             "max_capacity": cls.max_capacity,
-            "current_attendees": cls.current_attendees
+            "current_attendees": cls.current_attendees,
+            "attendees": cls.attendees,
         }
 
         # Обновляем существующий или добавляем новый
@@ -82,10 +83,10 @@ class GroupClassRepository:
                 room = rooms.get(item["room_id"])
 
                 if coach is None:
-                    print(f"⚠️ Тренер с ID {item['coach_id']} не найден для занятия {item['class_id']}")
+                    print(f"Тренер с ID {item['coach_id']} не найден для занятия {item['class_id']}")
                     continue
                 if room is None:
-                    print(f"⚠️ Зал с ID {item['room_id']} не найден для занятия {item['class_id']}")
+                    print(f"Зал с ID {item['room_id']} не найден для занятия {item['class_id']}")
                     continue
 
                 group_class = GroupClass(
@@ -95,12 +96,13 @@ class GroupClassRepository:
                     room=room,
                     schedule=datetime.fromisoformat(item["schedule"]),
                     max_capacity=item["max_capacity"],
-                    current_attendees=item["current_attendees"]
+                    current_attendees=item["current_attendees"],
+                    attendees=item.get("attendees", [])
                 )
                 classes.append(group_class)
 
             except (KeyError, ValueError) as e:
-                print(f"⚠️ Пропущена некорректная запись занятия: {e}")
+                print(f"Рекорректная запись занятия: {e}")
                 continue
 
         return classes
