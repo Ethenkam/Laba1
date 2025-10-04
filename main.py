@@ -1,4 +1,3 @@
-# main.py
 from datetime import date
 from classes.people import Member
 from repositories.member_repository import MemberRepository

@@ -93,9 +93,9 @@ class Coach(Person):
         self.hourly_rate = hourly_rate
         self.is_active = True
 
-        def get_full_name(self) -> str:
+    def get_full_name(self) -> str:
             return f"{self.first_name} {self.last_name} ({self.specialization})"
-        def set_availability(self, available: bool) -> None:
+    def set_availability(self, available: bool) -> None:
             self.is_active = available
 class Staff(Person):
     def __init__(self, id: int, first_name: str, last_name: str, email: str, phone: str, position: str, salary: Decimal, hire_date: date):
@@ -104,7 +104,7 @@ class Staff(Person):
         self.salary = salary
         self.hire_date = hire_date
 
-        def get_full_name(self) -> str:
+    def get_full_name(self) -> str:
             return f"{self.first_name} {self.last_name} ({self.position})"
-        def perform_duty(self) -> None:
+    def perform_duty(self) -> None:
             pass

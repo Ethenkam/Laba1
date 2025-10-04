@@ -68,4 +68,4 @@ class MemberRepository:
         for m in self.get_all():
             if m.id == member_id:
                 return m
-            return None
+        return None
