@@ -1,4 +1,3 @@
-from typing import Optional
 class Equipment:
     def __init__(self, equipment_id, room_id, name, type, is_available=True):
         self.equipment_id = equipment_id

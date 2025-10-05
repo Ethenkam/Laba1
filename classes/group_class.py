@@ -21,7 +21,7 @@ class GroupClass:
         self.schedule = schedule
         self.max_capacity = self._validate_capacity(max_capacity)
         self.current_attendees = current_attendees
-        self.attendees = []
+        self.attendees = attendees if attendees is not None else []
 
     @staticmethod
     def _validate_id(class_id: int) -> int:

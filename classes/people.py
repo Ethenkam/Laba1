@@ -60,7 +60,7 @@ class Person(ABC):
     def _validate_phone(phone: str) -> str:
         phone = re.sub(r"\D", "", phone)  # оставляем только цифры
         if len(phone)!=11:
-            raise InvalidPhoneError("Номер телефона должен содержать 10 цифр, не считая +7")
+            raise InvalidPhoneError("Номер телефона должен содержать 10 цифр, не считая +7", f'содержит: {len(phone)}')
         return phone
 
     @abstractmethod

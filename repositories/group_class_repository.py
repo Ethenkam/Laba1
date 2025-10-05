@@ -2,7 +2,7 @@
 import json
 import os
 from datetime import datetime
-from typing import List, Optional
+from typing import List
 from classes.group_class import GroupClass
 from repositories.coach_repository import CoachRepository
 from repositories.gym_room_repository import GymRoomRepository
@@ -107,7 +107,7 @@ class GroupClassRepository:
 
         return classes
 
-    def find_by_id(self, class_id: int) -> Optional[GroupClass]:
+    def find_by_id(self, class_id: int) -> GroupClass|None:
         for cls in self.find_all():
             if cls.class_id == class_id:
                 return cls
