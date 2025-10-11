@@ -6,8 +6,7 @@ from classes.people import Member, Coach
 from classes.gym_room import GymRoom
 from classes.group_class import GroupClass
 from classes.Membership_plan import MembershipPlan
-from classes.Payment import Payment
-
+from classes.PaymentService import PaymentService
 from repositories.member_repository import MemberRepository
 from repositories.coach_repository import CoachRepository
 from repositories.gym_room_repository import GymRoomRepository
@@ -49,7 +48,7 @@ coach_repo = CoachRepository()
 room_repo = GymRoomRepository()
 
 
-print("👥 Существующие участники:")
+print("Существующие участники:")
 members = member_repo.get_all()
 if members:
     for m in members:
@@ -78,22 +77,12 @@ plans = plan_repo.find_all()
 chosen_plan = plans[0]
 print(f"Выбран план: {chosen_plan}")
 
-payment = Payment(
-    payment_id=1,
+payment_service = PaymentService(member_repo, payment_repo)
+success = payment_service.purchase_membership(
     member_id=new_member.id,
-    plan_id=chosen_plan.plan_id,
-    amount=chosen_plan.price,
-    payment_date=date.today(),
+    plan=chosen_plan,
+    payment_id=1
 )
-payment_repo.save(payment)
-print(f"Платёж создан: {payment.amount} руб.")
-
-
-new_member.membership_start_date = date.today()
-new_member.membership_end_date = date.today() + timedelta(days=chosen_plan.duration_days)
-new_member.is_active = True
-member_repo.save(new_member)
-print(f"Абонемент активирован до: {new_member.membership_end_date}")
 
 print("\nЗапись на групповое занятие...")
 
