@@ -13,11 +13,11 @@ class MemberRepository:
     def _load(self) -> List:
         if not os.path.exists(self.filename):
             return []
-        with open(self.filename, 'r') as f:
+        with open(self.filename, 'r', encoding='utf-8') as f:
             return json.load(f)
 
     def _save(self, members: List):
-        with open(self.filename, 'w') as f:
+        with open(self.filename, 'w', encoding='utf-8') as f:
             json.dump(members, f, indent=2)
 
     def save(self, member: Member) -> None:

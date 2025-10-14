@@ -45,14 +45,14 @@ class Person(ABC):
     def _validate_name(name: str, field: str) -> str:
         if not isinstance(name, str) or not name.strip():
             raise InvalidNameError(f"Поле '{field}' не может быть пустым.")
-        if not re.match(r"^[А-Яа-яA-Za-z\-']+$", name.strip()):
+        if not re.match(r"^[А-Яа-яA-Za-z\-']+$", name.strip(), re.UNICODE):
             raise InvalidNameError(f"Поле '{field}' содержит недопустимые символы.")
         return name.strip()
 
     @staticmethod
     def _validate_email(email: str) -> str:
         email = email.strip()
-        if not re.match(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", email):
+        if not re.match(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", email, re.UNICODE):
             raise InvalidEmailError("Некорректный формат email.")
         return email
 

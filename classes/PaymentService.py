@@ -11,13 +11,11 @@ class PaymentService:
 
     def purchase_membership(self, member_id: int, plan, payment_id: int) -> bool:
         try:
-            # 1. Загружаем участника
             member = self.member_repo.get_by_id(member_id)
             if not member:
                 print(f"Участник с ID {member_id} не найден.")
                 return False
 
-            # 2. Создаём платёж
             payment = Payment(
                 payment_id=payment_id,
                 member_id=member_id,
@@ -27,8 +25,6 @@ class PaymentService:
             )
             self.payment_repo.save(payment)
             print(f"Платёж #{payment_id} создан: {plan.price} руб.")
-
-            # 3. Активируем абонемент
             member.membership_start_date = date.today()
             member.membership_end_date = date.today() + timedelta(days=plan.duration_days)
             member.is_active = True

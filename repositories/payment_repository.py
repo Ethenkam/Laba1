@@ -46,7 +46,7 @@ class PaymentRepository:
                 )
                 payments.append(payment)
             except (KeyError, ValueError) as e:
-                print(f"⚠️ Пропущен некорректный платёж: {e}")
+                print(f"Неправильный платёж {e}")
                 continue
         return payments
 
