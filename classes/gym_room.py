@@ -1,4 +1,3 @@
-# models/gym_room.py
 class InvalidRoomTypeError(ValueError):
     """Недопустимый тип зала."""
     pass
