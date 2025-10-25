@@ -64,8 +64,18 @@ class MemberRepository:
             )
             members.append(m)
         return members
+
     def get_by_id(self, member_id: int) -> Optional[Member]:
         for m in self.get_all():
             if m.id == member_id:
                 return m
         return None
+
+    def delete(self, member_id: int) -> bool:
+        data = self._load()
+        for i, item in enumerate(data):
+            if item["id"] == member_id:
+                del data[i]
+                self._save(data)
+                return True
+        return False

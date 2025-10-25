@@ -79,3 +79,13 @@ class CoachRepository:
             if coach.id == coach_id:
                 return coach
         return None
+
+    def delete(self, coach_id: int) -> bool:
+        data = self._load_raw_data()
+        for i, item in enumerate(data):
+            if item["id"] == coach_id:
+                del data[i]
+                self._save_raw_data(data)
+                print(f"Тренер с ID {coach_id} удалён.")
+                return True
+        return False

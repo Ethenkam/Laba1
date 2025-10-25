@@ -112,3 +112,13 @@ class GroupClassRepository:
             if cls.class_id == class_id:
                 return cls
         return None
+
+    def delete(self, class_id: int) -> bool:
+        data = self._load_raw_data()
+        for i, item in enumerate(data):
+            if item["class_id"] == class_id:
+                del data[i]
+                self._save_raw_data(data)
+                print(f"Групповое занятие с ID {class_id} удалено.")
+                return True
+        return False

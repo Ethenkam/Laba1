@@ -71,3 +71,13 @@ class GymRoomRepository:
             if room.room_id == room_id:
                 return room
         return None
+
+    def delete(self, room_id: int) -> bool:
+        data = self._load_raw_data()
+        for i, item in enumerate(data):
+            if item["room_id"] == room_id:
+                del data[i]
+                self._save_raw_data(data)
+                print(f"Зал с ID {room_id} удалён.")
+                return True
+        return False

@@ -58,3 +58,12 @@ class MembershipPlanRepository:
             if plan.plan_id == plan_id:
                 return plan
         return None
+
+    def delete(self, plan_id: int) -> bool:
+        data = self._load()
+        for i, item in enumerate(data):
+            if item["plan_id"] == plan_id:
+                del data[i]
+                self._save(data)
+                return True
+        return False

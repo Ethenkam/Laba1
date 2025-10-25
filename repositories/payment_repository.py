@@ -52,3 +52,12 @@ class PaymentRepository:
 
     def find_by_member_id(self, member_id: int) -> List[Payment]:
         return [p for p in self.find_all() if p.member_id == member_id]
+
+    def delete(self, payment_id: int) -> bool:
+        data = self._load()
+        for i, item in enumerate(data):
+            if item["payment_id"] == payment_id:
+                del data[i]
+                self._save(data)
+                return True
+        return False
